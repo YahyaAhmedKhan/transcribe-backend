@@ -11,7 +11,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const FRONTEND_URL = process.env.FRONTEND_URL;
-console.log('FRONTEND_URL:', FRONTEND_URL); 
 
 // CORS Configuration
 const corsOptions = NODE_ENV === 'production'

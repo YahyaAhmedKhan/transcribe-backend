@@ -7,13 +7,23 @@ dotenv.config();
 class Transcribe {
     private static groq = new Groq();
 
-    static async transcribeAudio(filePath: string): Promise<string> {
-        const transcription = await Transcribe.groq.audio.transcriptions.create({
-            file: fs.createReadStream(filePath), // Required path to audio file - replace with your audio file!
-            model: "whisper-large-v3-turbo", // Required model to use for transcription
-
-        });
-        return transcription.text;
+    static async transcribeAudio(filePath: string, language?: string): Promise<string> {
+        // Use translations API if language is explicitly set to 'english'
+        // Otherwise use transcriptions API (for all languages including English)
+        console.log(language)
+        if (language && language.toLowerCase() === 'english') {
+            const translation = await Transcribe.groq.audio.translations.create({
+                file: fs.createReadStream(filePath),
+                model: "whisper-large-v3",
+            });
+            return translation.text;
+        } else {
+            const transcription = await Transcribe.groq.audio.transcriptions.create({
+                file: fs.createReadStream(filePath),
+                model: "whisper-large-v3-turbo",
+            });
+            return transcription.text;
+        }
     }
 }
 

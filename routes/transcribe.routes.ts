@@ -36,8 +36,11 @@ router.post('/', upload.single('audio'), async (req: Request, res: Response) => 
       return;
     }
 
+    // Get optional language parameter from request body
+    const language = req.body.language;
+
     // Transcribe the uploaded audio file
-    const transcription = await Transcribe.transcribeAudio(req.file.path);
+    const transcription = await Transcribe.transcribeAudio(req.file.path, language);
 
     // Clean up the uploaded file
     fs.unlinkSync(req.file.path);
