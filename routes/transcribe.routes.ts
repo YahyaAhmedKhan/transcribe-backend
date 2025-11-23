@@ -7,9 +7,18 @@ import path from 'path';
 const router = Router();
 
 // Configure multer to preserve file extension
-// Use /tmp for serverless environments (Vercel)
+// Use ./tmp locally, /tmp in production
+const uploadDir = process.env.NODE_ENV === 'production' ? '/tmp' : './tmp';
+
+// Ensure local tmp directory exists
+if (process.env.NODE_ENV !== 'production') {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+}
+
 const storage = multer.diskStorage({
-  destination: '/tmp',
+  destination: uploadDir,
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
