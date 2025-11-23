@@ -1,7 +1,11 @@
 import express from 'express';
+import morgan from 'morgan';
 
 const app = express();
 const PORT = 3000;
+
+// Logging middleware
+app.use(morgan('dev'));
 
 // Middleware to allow JSON body parsing
 app.use(express.json());
