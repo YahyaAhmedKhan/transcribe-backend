@@ -7,8 +7,9 @@ import path from 'path';
 const router = Router();
 
 // Configure multer to preserve file extension
+// Use /tmp for serverless environments (Vercel)
 const storage = multer.diskStorage({
-  destination: 'uploads/',
+  destination: '/tmp',
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
