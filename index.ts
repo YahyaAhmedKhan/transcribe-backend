@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import transcribeRoutes from './routes/transcribe.routes.js';
 
 const app = express();
 const PORT = 3000;
@@ -9,6 +10,9 @@ app.use(morgan('dev'));
 
 // Middleware to allow JSON body parsing
 app.use(express.json());
+
+// Routes
+app.use('/transcribe', transcribeRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {

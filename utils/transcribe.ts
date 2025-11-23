@@ -18,9 +18,3 @@ class Transcribe {
 }
 
 export default Transcribe;
-
-Transcribe.transcribeAudio("aud.ogg").then((text) => {
-    console.log("Transcribed Text:", text);
-}).catch((error) => {
-    console.error("Error during transcription:", error);
-});
